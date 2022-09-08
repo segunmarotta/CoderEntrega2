@@ -33,6 +33,9 @@ let rDependencia;
 let actividad;
 let montoASolicitar;
 
+let sector = document.querySelector("#usuario div");
+updateUserHTML();
+
 
 let miFormulario = document.getElementById("formulario");
 miFormulario.addEventListener("submit", agregarUsuario);
@@ -54,8 +57,14 @@ function agregarUsuario (usuario){
     usuarios.push(newUser);
     console.log("se agrego el usuario", newUser);
     alert(`Se agrego el usuario ${newUser.fName} ${newUser.lName}`)
-    for (const user of usuarios) {
-        let sector = document.getElementById("usuario");
+    updateUserHTML()
+}
+
+
+
+function updateUserHTML(){
+    sector.innerHTML = "";
+    usuarios.forEach((user) => {
         let cont = document.createElement("div");
 
         cont.innerHTML = `<h3>${user.fName} ${user.lName} </h3>
@@ -69,8 +78,7 @@ function agregarUsuario (usuario){
                         <p>Actividad: ${user.actividad}</p>
                         <p>Monto a Solicitar: ${user.montoASolicitar}</p>`;
         sector.appendChild(cont);
-        
-    }
+    } )
 }
 
 
@@ -81,7 +89,7 @@ miSimulador.addEventListener("submit", iniSimulacion);
 
 function iniSimulacion(usuario){
     usuario.preventDefault();
-    let userE = parseInt((simulador.children[1].value));
+    let userE = parseInt((simulador.userElegido.value));
     let userElegido = userE - 1;
 
         if (usuarios[userElegido].age <= 25 && usuarios[0].montoASolicitar >= 30000){
